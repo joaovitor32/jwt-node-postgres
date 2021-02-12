@@ -11,6 +11,13 @@
   "author": "João Vitor Muniz Lopes <joaovitormunizlopes.com> (https://github.com/joaovitor32)",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "pg": "^8.5.1",
     "ts-node": "^9.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.27"
   }
 }
