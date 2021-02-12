@@ -1,0 +1,16 @@
+{
+  "name": "jwt-node-postgres",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules src/server.ts",
+    "test:coverage": "jest --coverage --watchAll=false"
+  },
+  "author": "João Vitor Muniz Lopes <joaovitormunizlopes.com> (https://github.com/joaovitor32)",
+  "license": "ISC",
+  "dependencies": {
+    "ts-node": "^9.1.1"
+  }
+}
