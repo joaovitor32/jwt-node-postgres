@@ -24,3 +24,5 @@ services:
       - "${portNode}:${portNode}"
     volumes:
       - .:/usr/app 
+
+
