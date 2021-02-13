@@ -1,8 +1,8 @@
 CREATE USER POSTGRES_USER;
 CREATE DATABASE POSTGRES_DB;
-CREATE TABLE usuariocrud(
-    id VARCHAR(200) ,
-    nome VARCHAR (50) ,
-    senha VARCHAR (50) 
+CREATE TABLE usuario(
+    id text,
+    nome text,
+    senha text 
 );
 GRANT ALL PRIVILEGES ON DATABASE POSTGRES_DB TO POSTGRES_USER;
