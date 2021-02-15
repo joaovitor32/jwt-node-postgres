@@ -1,5 +1,5 @@
-import BcryptHashProvider from '../../providers/HashProvider/implementation/BcryptHashImplementation'
-import { UsersRepository } from '../../repositories/UsersRepository/implementations/UsersRepository';
+import BcryptHashProvider from '../../../providers/HashProvider/implementation/BcryptHashImplementation'
+import { UsersRepository } from '../../../repositories/UsersRepository/implementations/UsersRepository';
 
 import { CreateUserController } from './CreateUserController';
 import { CreateUserUseCase } from './CreateUserUseCase';

@@ -1,8 +1,8 @@
-import {User} from '../../entities/User';
-import AppError from '../../errors/AppError';
+import {User} from '../../../entities/User';
+import AppError from '../../../errors/AppError';
 import ICreateUserDTO from "./CreateUserDTO";
-import IHashProvider from '../../providers/HashProvider/implementation/BcryptHashImplementation';
-import IUsersRepository from '../../repositories/UsersRepository/IUsersRepository';
+import IHashProvider from '../../../providers/HashProvider/implementation/BcryptHashImplementation';
+import IUsersRepository from '../../../repositories/UsersRepository/IUsersRepository';
 
 export class CreateUserUseCase{
 

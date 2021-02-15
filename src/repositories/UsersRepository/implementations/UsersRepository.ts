@@ -2,7 +2,7 @@ import pg from 'pg'
 import {User} from '../../../entities/User';
 import IUsersRepository from '../IUsersRepository';
 
-import ICreateUserDTO from '../../../useCases/CreateUser/CreateUserDTO';
+import ICreateUserDTO from '../../../useCases/User/CreateUser/CreateUserDTO';
 
 require('dotenv').config()
 
