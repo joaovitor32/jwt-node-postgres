@@ -34,4 +34,22 @@ export class UsersRepository implements IUsersRepository{
 
     }
 
+    async findByName(nome:string):Promise<User>{
+
+        
+        let response;
+     
+        let db = new pg.Client(this.config);
+       
+        await db.connect();
+
+        const query = "SELECT * FROM usuario WHERE nome=$1";
+
+        response = await db.query(query,[nome]);
+       
+        await db.end();
+        
+        return response.rows[0];
+
+    }
 }
