@@ -1,6 +1,7 @@
 import {Router} from 'express';
 
 import { createUserController } from './useCases/User/CreateUser';
+import { loginUserController } from './useCases/Token/UserLogin'
 
 import CheckAuthorizationMiddleware from './middlewares/CheckAuthorizationMiddleware';
 
@@ -11,7 +12,7 @@ router.post('/users', (request, response) => {
 });
 
 router.post('/login',(request,response)=>{
-    return
+    return loginUserController.handle(request,response);
 })
 
 router.use(CheckAuthorizationMiddleware);
