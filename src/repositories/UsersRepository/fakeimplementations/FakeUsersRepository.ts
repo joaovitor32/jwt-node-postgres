@@ -9,6 +9,18 @@ export class FakeUsersRepository implements IUsersRepository {
       return user;
     }
   
+    async findByName(name: string): Promise<User|undefined> {
+      
+      const user = await this.users.find(user => user.nome === name);
+
+      return user;
+    }
+
+    async read(id: string): Promise<User|undefined> {
+      const user = await this.users.find(user => user.id === id);
+
+      return user;
+    }
   
 }
   

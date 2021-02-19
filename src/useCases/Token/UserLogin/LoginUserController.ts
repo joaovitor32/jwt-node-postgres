@@ -1,5 +1,4 @@
 import { Request, Response} from 'express';
-import { loginUserUseCase } from '.';
 
 import { LoginUserUseCase } from './LoginUserUseCase'
 

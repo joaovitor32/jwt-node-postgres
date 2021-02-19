@@ -28,10 +28,11 @@ export class LoginUserUseCase{
     async execute({nome,senha}:ILoginUserDTO):Promise<IResponse>{
 
 
-        let existingUser:User;
+        let existingUser:User|undefined;
 
         try{
             existingUser = await this.usersRepository.findByName(nome);
+          
         }catch{
             throw new AppError('Login failed, try again',500);
         }
@@ -47,8 +48,8 @@ export class LoginUserUseCase{
             throw new AppError('User validation could not be completed',500);
 
         }
-
-        if(isValidPassword){
+       
+        if(!isValidPassword){
             throw new AppError('Given password is not valid',500);
         }
 

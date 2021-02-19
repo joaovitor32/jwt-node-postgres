@@ -52,4 +52,23 @@ export class UsersRepository implements IUsersRepository{
         return response.rows[0];
 
     }
+
+    async read(id:string):Promise<User>{
+
+        
+        let response;
+     
+        let db = new pg.Client(this.config);
+       
+        await db.connect();
+
+        const query = "SELECT * FROM usuario WHERE id=$1";
+
+        response = await db.query(query,[id]);
+       
+        await db.end();
+        
+        return response.rows[0];
+
+    }
 }

@@ -18,6 +18,13 @@ export class CreateUserUseCase{
 
     async execute({nome,senha}:ICreateUserDTO){
 
+ 
+        const usersAlreadyExists = await this.usersRepository.findByName(nome);
+
+        if(usersAlreadyExists){
+            throw new AppError('User already exists')
+        }
+
         const hashedPassword = await this.hashProvider.hash(senha);
 
         const user = new User({nome,senha:hashedPassword});
