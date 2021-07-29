@@ -1,74 +1,63 @@
-import pg from 'pg'
-import {User} from '../../../entities/User';
-import IUsersRepository from '../IUsersRepository';
+/* eslint-disable @typescript-eslint/no-var-requires */
+import pg from "pg";
 
-import ICreateUserDTO from '../../../useCases/User/CreateUser/CreateUserDTO';
+import User from "../../../entities/User";
+import ICreateUserDTO from "../../../useCases/User/CreateUser/CreateUserDTO";
+import IUsersRepository from "../IUsersRepository";
 
-require('dotenv').config()
+require("dotenv").config();
 
-export class UsersRepository implements IUsersRepository{
+export default class UsersRepository implements IUsersRepository {
+  config = {
+    user: process.env.user ? process.env.user : "postgres",
+    host: process.env.hostPostgres
+      ? process.env.hostPostgres
+      : "jwt-node-postgres_db_1",
+    database: process.env.database ? process.env.database : "jwtnodepostgres",
+    password: process.env.password ? process.env.password : "postgres",
+    port: process.env.portDB ? parseInt(process.env.portDB, 10) : 5432,
+  };
 
-    config={
-        user:process.env.user?process.env.user:"postgres",
-        host: process.env.hostPostgres?process.env.hostPostgres:"jwt-node-postgres_db_1",
-        database:process.env.database?process.env.database:"jwtnodepostgres",
-        password:process.env.password?process.env.password:"postgres",
-        port:process.env.portDB?parseInt(process.env.portDB):5432
-    }
+  async save({ id, nome, senha }: ICreateUserDTO): Promise<User> {
+    const db = new pg.Client(this.config);
 
-    async save({id,nome,senha}:ICreateUserDTO):Promise<User>{
-    
-        let response;
-     
-        let db = new pg.Client(this.config);
-       
-        await db.connect();
+    await db.connect();
 
-        const query = "INSERT INTO usuario (id,nome,senha) VALUES ($1,$2,$3) RETURNING *;";
+    const query =
+      "INSERT INTO usuario (id,nome,senha) VALUES ($1,$2,$3) RETURNING *;";
 
-        response = await db.query(query,[id,nome,senha]);
-       
-        await db.end();
-        
-        return response.rows[0];
+    const response = await db.query(query, [id, nome, senha]);
 
-    }
+    await db.end();
 
-    async findByName(nome:string):Promise<User>{
+    return response.rows[0];
+  }
 
-        
-        let response;
-     
-        let db = new pg.Client(this.config);
-       
-        await db.connect();
+  async findByName(nome: string): Promise<User> {
+    const db = new pg.Client(this.config);
 
-        const query = "SELECT * FROM usuario WHERE nome=$1";
+    await db.connect();
 
-        response = await db.query(query,[nome]);
-       
-        await db.end();
-        
-        return response.rows[0];
+    const query = "SELECT * FROM usuario WHERE nome=$1";
 
-    }
+    const response = await db.query(query, [nome]);
 
-    async read(id:string):Promise<User>{
+    await db.end();
 
-        
-        let response;
-     
-        let db = new pg.Client(this.config);
-       
-        await db.connect();
+    return response.rows[0];
+  }
 
-        const query = "SELECT * FROM usuario WHERE id=$1";
+  async read(id: string): Promise<User> {
+    const db = new pg.Client(this.config);
 
-        response = await db.query(query,[id]);
-       
-        await db.end();
-        
-        return response.rows[0];
+    await db.connect();
 
-    }
+    const query = "SELECT * FROM usuario WHERE id=$1";
+
+    const response = await db.query(query, [id]);
+
+    await db.end();
+
+    return response.rows[0];
+  }
 }

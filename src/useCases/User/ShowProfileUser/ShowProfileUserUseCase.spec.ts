@@ -1,45 +1,39 @@
-import AppError from '../../../errors/AppError';
-import { User } from '../../../entities/User';
+import User from "../../../entities/User";
+import AppError from "../../../errors/AppError";
+import FakeUsersRepository from "../../../repositories/UsersRepository/fakeimplementations/FakeUsersRepository";
+import ShowProfileUserUseCase from "./ShowProfileUserUseCase";
 
-import { FakeUsersRepository } from '../../../repositories/UsersRepository/fakeimplementations/FakeUsersRepository';
+let fakeUsersRepository: FakeUsersRepository;
 
-import { ShowProfileUserUseCase } from './ShowProfileUserUseCase';
-import { read } from 'fs';
+let showProfileUserUseCase: ShowProfileUserUseCase;
 
-let fakeUsersRepository:FakeUsersRepository;
+describe("Reading User", () => {
+  beforeEach(() => {
+    fakeUsersRepository = new FakeUsersRepository();
 
-let showProfileUserUseCase:ShowProfileUserUseCase;
+    showProfileUserUseCase = new ShowProfileUserUseCase(fakeUsersRepository);
+  });
 
-describe('Reading User',()=>{
+  it("Should be able to read a new User", async () => {
+    const userCreated = new User({
+      nome: "Jhon Doe",
+      senha: "123457",
+    });
 
-    beforeEach(()=>{
+    const user = await fakeUsersRepository.save(userCreated);
 
-        fakeUsersRepository = new FakeUsersRepository();
+    const userRead = await showProfileUserUseCase.execute(user.id);
 
-        showProfileUserUseCase = new ShowProfileUserUseCase(fakeUsersRepository);
+    expect(userRead).toEqual({
+      id: user.id,
+      nome: "Jhon Doe",
+      senha: "123457",
+    });
+  });
 
-    })
-
-    it('Should be able to read a new User',async ()=>{
-
-        let userCreated = new User({
-        nome:"Jhon Doe",
-        senha:"123457"})
-
-        const user = await fakeUsersRepository.save(userCreated);
-
-        const userRead = await showProfileUserUseCase.execute(user.id);
-
-        expect(userRead).toEqual({
-            id:user.id,
-            nome:"Jhon Doe",
-            senha:"123457"
-        })
-
-    })
-
-    it('Should not be able to read a new User',async()=>{
-        expect(showProfileUserUseCase.execute('non-valid-string')).rejects.toBeInstanceOf(AppError);
-    })    
-
-})
+  it("Should not be able to read a new User", async () => {
+    expect(
+      showProfileUserUseCase.execute("non-valid-string")
+    ).rejects.toBeInstanceOf(AppError);
+  });
+});

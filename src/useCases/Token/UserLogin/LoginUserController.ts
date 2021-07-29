@@ -1,34 +1,24 @@
-import { Request, Response} from 'express';
+import { Request, Response } from "express";
 
-import { LoginUserUseCase } from './LoginUserUseCase'
+import LoginUserUseCase from "./LoginUserUseCase";
 
-export class LoginUserController{
+export default class LoginUserController {
+  constructor(private loginUserUseCase: LoginUserUseCase) {}
 
-    constructor(
-        private loginUserUseCase:LoginUserUseCase
-    ){}
+  async handle(request: Request, response: Response): Promise<Response> {
+    const { nome, senha } = request.body;
 
-    async handle(request:Request,response:Response):Promise<Response>{
+    try {
+      const { user, token } = await this.loginUserUseCase.execute({
+        nome,
+        senha,
+      });
 
-        const {nome,senha} = request.body;
-        
-        try{
-
-            let { user,token } = await this.loginUserUseCase.execute({
-                nome,
-                senha
-            })
-
-            return response.json({user,token})
-
-        }catch(err){
-
-            return response.status(400).json({
-                message:err.message||'Unexpected error'
-            })
-
-        }
-
+      return response.json({ user, token });
+    } catch (err) {
+      return response.status(400).json({
+        message: err.message || "Unexpected error",
+      });
     }
-
+  }
 }

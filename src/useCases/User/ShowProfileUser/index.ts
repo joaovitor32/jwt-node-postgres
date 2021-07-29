@@ -1,13 +1,15 @@
-import {UsersRepository} from '../../../repositories/UsersRepository/implementations/UsersRepository';
-import { ShowProfileUserController } from './ShowProfileController';
-import { ShowProfileUserUseCase } from './ShowProfileUserUseCase';
+import UsersRepository from "../../../repositories/UsersRepository/implementations/UsersRepository";
+import ShowProfileUserController from "./ShowProfileController";
+import ShowProfileUserUseCase from "./ShowProfileUserUseCase";
 
 const postgresUsersRepository = new UsersRepository();
 
 const showProfileUserUseCase = new ShowProfileUserUseCase(
-    postgresUsersRepository
-)
+  postgresUsersRepository
+);
 
-const showProfileUserController = new ShowProfileUserController(showProfileUserUseCase);
+const showProfileUserController = new ShowProfileUserController(
+  showProfileUserUseCase
+);
 
 export { showProfileUserUseCase, showProfileUserController };

@@ -1,26 +1,23 @@
-import IUsersRepository  from '../IUsersRepository';
-import { User } from '../../../entities/User';
+import User from "../../../entities/User";
+import IUsersRepository from "../IUsersRepository";
 
-export class FakeUsersRepository implements IUsersRepository {
-    private users: User[] = [];
-  
-    async save(user: User): Promise<User> {
-      this.users.push(user);
-      return user;
-    }
-  
-    async findByName(name: string): Promise<User|undefined> {
-      
-      const user = await this.users.find(user => user.nome === name);
+export default class FakeUsersRepository implements IUsersRepository {
+  private users: User[] = [];
 
-      return user;
-    }
+  async save(user: User): Promise<User> {
+    this.users.push(user);
+    return user;
+  }
 
-    async read(id: string): Promise<User|undefined> {
-      const user = await this.users.find(user => user.id === id);
+  async findByName(name: string): Promise<User | undefined> {
+    const user = await this.users.find((userElem) => userElem.nome === name);
 
-      return user;
-    }
-  
+    return user;
+  }
+
+  async read(id: string): Promise<User | undefined> {
+    const user = await this.users.find((userElem) => userElem.id === id);
+
+    return user;
+  }
 }
-  
